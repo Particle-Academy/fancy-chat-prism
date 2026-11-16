@@ -1,25 +1,17 @@
 # fancy-chat-prism
 
-**OPTIONAL** Prism adapters for the Fancy agent-chat framework (council change
-CC-fancy-0042). **Not started; nothing here is published.**
+> **Retired, never built or published** (owner, 2026-11-16).
 
-The chat framework's core (`@particle-academy/fancy-chat-js`,
-`@particle-academy/fancy-chat-ui`, `particle-academy/fancy-chat-php`) is
-provider-neutral and works with any agent backend, or none. The whole Prism
-ecosystem is an optional addon, and this package is where its TypeScript half
-lives:
+It was planned as the one TypeScript chat package allowed to import Prism, the
+"optional addon" of a provider-neutral core. That reading of the CC-fancy-0042
+ruling was wrong: the Fancy agent chat is built on the Prism ecosystem, and only the
+extras (prism-graph, prism-memory, the browser) are optional. So there is no
+separate adapter package:
 
-| Entry | Maps |
-|---|---|
-| `./harness` | prism-harness run lifecycle + Prism core stream events onto the neutral run, turn, part and HITL events |
-| `./acp` | `@particle-academy/prism-acp` session updates, turn outcomes, permission requests, commands and plans |
-| `./graph` | prism-graph `ScopedGraph` reads onto a `KnowledgeAdapter`, from an app-bound scope only |
-| `./memory` | prism-memory, scope to be agreed with Prism |
+- `@particle-academy/fancy-chat-ui` reads prism-graph's own types directly
+  (`./knowledge`).
+- Prism Harness runs on the server: `particle-academy/fancy-chat-php` 0.2.0 today, and
+  a Node twin on `@particle-academy/prism-harness` and `@particle-academy/prism-acp`
+  next, both implementing the `@particle-academy/fancy-chat-js` contract.
 
-The adapters use Prism's own types and stream events; nothing Prism already does
-is rewritten here.
-
-This is the only TypeScript chat package allowed to import Prism, and it is the
-negative control of the core packages' no-Prism packaging test.
-
-Design: `.ai/plans/agent-chat-framework.md` in the Fancy envelope.
+Design: `.ai/plans/agent-chat-on-prism.md` in the Fancy envelope.
